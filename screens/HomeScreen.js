@@ -8,15 +8,16 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button,
+  FlatList,
   Alert
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-
+import { connect } from 'react-redux';
 import { MonoText } from '../components/StyledText';
+import { toDone } from '../actions/todo';
+import _ from 'lodash';
 
-
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
       return {
@@ -35,10 +36,31 @@ export default class HomeScreen extends React.Component {
     this.props.navigation.push('CreateTodo');
   }
 
+  renderTodoItem = data => {
+    const { item } = data
+
+    return <TouchableOpacity onPress={ () => { this.onPressItem(item.index) } }>
+        <View style={styles.containerItem}>
+          <Text style={styles.textItem}>{item.title}</Text>
+        </View>
+      </TouchableOpacity>
+  }
+
+  onPressItem = index => {
+    console.log(index)
+    this.props.toDone(index)
+  }
+
   render() {
+    console.log(this.props.todos)
+
     return (
       <View style={styles.container}>
-
+        <FlatList 
+          data={ this.props.todos }
+          renderItem={ this.renderTodoItem }
+          keyExtractor={ (item, index) => `${index}` }
+        />
       </View>
     )
   }
@@ -49,4 +71,33 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  textItem: {
+    fontSize: 16,
+    padding: 10,
+  },
+  containerItem: {
+    backgroundColor: 'skyblue',
+  }
 });
+
+
+
+const mapStateToProps = state => {
+  indexed_todos = state.todos.data.map((val, i) => {
+    return { ...val, index: i }
+  } );
+
+  return {
+    todos: _.filter(indexed_todos, todo => !todo.done )
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return { 
+    toDone: index => {
+      dispatch(toDone(index))
+    }
+   }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
