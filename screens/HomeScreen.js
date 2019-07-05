@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   containerItem: {
-    backgroundColor: 'skyblue',
+    margin: 10,
+    backgroundColor: 'red',
   }
 });
 

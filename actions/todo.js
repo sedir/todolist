@@ -1,4 +1,4 @@
-import { ADD_TODO, REMOVE_TODO, TO_DONE } from './types';
+import { ADD_TODO, REMOVE_DONE, TO_DONE } from './types';
 
 export const addTodo = (todoText) => {
     return {
@@ -14,9 +14,9 @@ export const toDone = (index) => {
     }
 };
 
-export const removeTodo = (todoText) => {
+export const removeDone = (index) => {
     return {
-        type: REMOVE_TODO,
-        payload: todoText
+        type: REMOVE_DONE,
+        payload: index
     }
 };

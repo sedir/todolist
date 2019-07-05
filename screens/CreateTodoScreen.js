@@ -31,16 +31,33 @@ class CreateTodoScreen extends Component {
         console.log(this.props.todos);
 
         return (
-            <View>
-                <Input multiline={true} value={ this.state.text }
-                 onChangeText={ this.onText } placeholder='Digite sua tarefa aqui...' />
-                <Button title='Salvar' onPress={ this.onSave } />
+            <View style={styles.container}>
+                <Input 
+                  multiline={true} 
+                  value={ this.state.text }
+                  onChangeText={ this.onText } 
+                  placeholder='Digite sua tarefa aqui...' 
+                />
+                <View style={styles.layout}>
+                  <Button title='Salvar' onPress={ this.onSave } />
+                </View>
             </View>
         )
     }
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  layout: {
+    margin: 15,
+    height: 20,
+    width: 100,
+    alignSelf: 'center'
+  }
+});
 
 
 const mapStateToProps = state => {
