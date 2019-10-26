@@ -8,19 +8,19 @@ const initialState = {
 const todoReducer = (state = initialState, action) => {
     switch(action.type) {
       case ADD_TODO:
-          newState = {
-              ...state,
-              data: state.data.concat({
-                title: action.payload,
-                done: false,
-                status: false
-              })
-            }
-        return newState;
+          return {
+            ...state,
+            data: state.data.concat({
+              title: action.payload,
+              done: false,
+              status: false
+            })
+          }
       case TO_DONE:
           state.data[action.payload].done = true
           return _.cloneDeep(state);
       case REMOVE_DONE:
+          // TODO remover todo
           state.data[action.payload].status =  true
           return _.cloneDeep(state);
         
